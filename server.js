@@ -19,6 +19,13 @@ app.get('/api/hello', function(req, res) {
   res.json({ greeting: 'hello API' });
 });
 
+app.post("/api/shorturl/", function(req, res) {
+  res.json({
+    original_url: req.body.url,
+    short_url: "https://url-shortener-api.herokuapp.com/api/shorturl/" + Math.floor(Math.random() * 100000)
+  });
+});
+
 app.listen(port, function() {
   console.log(`Listening on port ${port}`);
 });
