@@ -6,12 +6,15 @@ const app = express();
 
 // Basic Configuration
 const port = process.env.PORT || 3000;
+mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+
+const schema = new mongoose.Schema({name: String, size: String});
 
 app.use(cors());
 
 app.use('/public', express.static(`${process.cwd()}/public`));
 
-app.get('/', function(req, res) {
+app.get('/api/shorturl', function(req, res) {
   res.sendFile(process.cwd() + '/views/index.html');
 });
 
