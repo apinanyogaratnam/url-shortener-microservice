@@ -9,6 +9,7 @@ const port = process.env.PORT || 3000;
 mongoose.connect(process.env.DB_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const schema = new mongoose.Schema({name: String, size: String});
+const Url = mongoose.model('Url', schema);
 
 app.use(cors());
 
