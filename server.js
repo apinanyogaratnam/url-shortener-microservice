@@ -32,20 +32,20 @@ app.get('/api/hello', function(req, res) {
 app.post("/api/shorturl/", function(req, res) {
   const bodyUrl = req.body.url;
   console.log(bodyUrl);
-  // const urlConfirmation = dns.lookup(urlParser.parse(bodyUrl).hostname, (err, address, family) => {
-  //   if (err) {
-  //     res.json({error: "invalid URL"});
-  //   } else {
-  //     const newUrl = new Url({name: bodyUrl});
-  //     newUrl.save((err, data) => {
-  //       if (err) {
-  //         res.json({error: "invalid URL"});
-  //       } else {
-  //         res.json({original_url: bodyUrl, short_url: data._id});
-  //       }
-  //     });
-  //   }
-  // });
+  const urlConfirmation = dns.lookup(urlParser.parse(bodyUrl).hostname, (err, address, family) => {
+    if (!address) {
+      res.json({error: "invalid URL"});
+    } else {
+      const newUrl = new Url({name: bodyUrl});
+      newUrl.save((err, data) => {
+        if (err) {
+          res.json({error: "invalid URL"});
+        } else {
+          res.json({original_url: bodyUrl, short_url: data._id});
+        }
+      });
+    }
+  });
 });
 
 app.get("/api/shorturl/:id", function(req, res) {
